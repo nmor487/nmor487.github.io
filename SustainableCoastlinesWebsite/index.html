@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Sustainable Coastlines</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+	<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%;}
+    </style>
+</head>
+<body>
+<!-- Logo Bottom Left Corner -->
+<div style="position: fixed; z-index: 100000; background: transparent; left: 15px; bottom: 10px">
+  <img src="overlay.png" width = "40%">
+<!-- Links to sustainable coastlines and TPM -->  
+<!-- <br> 
+  <a href="http://sustainablecoastlines.org/"><strong>Sustainable Coastlines</strong></a> 
+  <a href="http://www.tepunahamatatini.ac.nz/"><strong>Te Punaha Matatini</strong></a> -->
+</div>
+
+<div id='map'></div>
+
+<!-- Starting Javascript -->
+<script>
+
+// LOAD MAP
+L.mapbox.accessToken = 'pk.eyJ1Ijoibm1vcjQ4NyIsImEiOiJjaXRzNjl4NDYwNHY4MnpvYmczeW5pc3lpIn0.icSxTMa2esji9UJyi99i7g';
+var map = L.mapbox.map('map',null,{
+	minZoom: 10,
+	maxZoom:15,
+	maxBounds: [[-37.2063,174.333],[-36.7062,175.0525]]
+}).setView([-37.03, 174.766664],12)
+
+var layers = {
+	  Outdoors: L.mapbox.tileLayer('mapbox.outdoors'),
+      Streets: L.mapbox.tileLayer('mapbox.streets'),
+      Satellite: L.mapbox.tileLayer('mapbox.satellite')
+};
+
+layers.Outdoors.addTo(map);
+L.control.layers(layers).addTo(map);
+
+// CREATE CUSTOM ICONS FOR SOURCES
+var Watercare = L.icon({
+	iconUrl: 'Watercare.png',
+	iconSize: [70, 70],
+});
+
+var AucklandAirport = L.icon({
+	iconUrl: 'AucklandAirport.png',
+	iconSize: [90, 90],
+});
+
+var International = L.icon({
+	iconUrl: 'InternationalArrow.png',
+	iconSize: [150, 150],
+});
+
+var FishingBoat = L.icon({
+	iconUrl: 'FishingBoat.png',
+	iconSize: [110, 110],
+});
+
+// drains
+var MangereBridgeDrain = L.icon({
+	iconUrl: 'streetdrain.png',
+	iconSize: [20, 30],
+});
+
+var MangereTownCentreDrain = L.icon({
+	iconUrl: 'streetdrain.png',
+	iconSize: [20, 30],
+});
+
+var OnehungaDrain = L.icon({
+	iconUrl: 'streetdrain.png',
+	iconSize: [20, 30],
+});
+
+// ADDING TO MAP
+L.marker([-36.965192, 174.779016], {icon: Watercare}).addTo(map)
+.bindPopup('<strong> Sewage Treatment Plant </strong>', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+L.marker([-37.00797, 174.79106], {icon: AucklandAirport}).addTo(map)
+.bindPopup('<strong> Auckland Airport </strong>', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+L.marker([-37.0419139, 174.53532], {icon: International}).addTo(map)
+.bindPopup('<strong> International Waters </strong>', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+L.marker([-37.024010, 174.713072], {icon: FishingBoat}).addTo(map)
+.bindPopup('<strong> Fishing Boats </strong>', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+
+// drains
+L.marker([-36.941179, 174.786938189], {icon: MangereBridgeDrain}).addTo(map)
+.bindPopup('<strong> Mangere Bridge Drain </strong>', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+L.marker([-36.968498, 174.79734495], {icon: MangereTownCentreDrain}).addTo(map)
+.bindPopup('<strong> Mangere Town Centre Drain </strong>', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+L.marker([-36.9205817, 174.787371], {icon: OnehungaDrain}).addTo(map)
+.bindPopup('<strong> Onehunga Drain </strong>', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+
+// ADDING BEACHES AS POLYLINES
+var polylineOptions = {
+    color: 'cyan',
+    weight: 15,
+    opacity: 0.5
+};
+
+var ClarksBeach = [
+    new L.LatLng(-37.1398309, 174.68839094),
+    new L.LatLng(-37.1372553702, 174.6914679),
+    new L.LatLng(-37.134311798, 174.7028527),
+	new L.LatLng(-37.13283997, 174.72239141),
+	new L.LatLng(-37.11738402, 174.7517764),
+	new L.LatLng(-37.09542134, 174.7682382),
+	new L.LatLng(-37.089776269, 174.7768537),
+];
+ var BottleTopBeach = [
+	new L.LatLng(-37.05989122, 174.8484713),
+	new L.LatLng(-37.0575582, 174.8512405),
+	new L.LatLng(-37.0563307572, 174.8587791),
+ ]; 
+var PescaraPoint = [
+	new L.LatLng(-37.06605538, 174.91220466),
+	new L.LatLng(-37.062004126, 174.9214355853),
+];
+var Weymouth = [
+	new L.LatLng(-37.038098469, 174.85555063),
+	new L.LatLng(-37.0426555, 174.8577828),
+	new L.LatLng(-37.04337502, 174.857095947),
+	new L.LatLng(-37.04529368, 174.85645207),
+	new L.LatLng(-37.05115214, 174.85795445),
+	new L.LatLng(-37.0519400827, 174.85919929),
+	new L.LatLng(-37.05152898, 174.86052998),
+];
+var PuhinuiReserve = [
+	new L.LatLng(-37.011074525, 174.8238010),
+	new L.LatLng(-37.0281766916, 174.846208069),
+	new L.LatLng(-37.02934183, 174.85097279),
+	new L.LatLng(-37.02807388, 174.85346246),
+];
+var RentonRd = [
+	new L.LatLng(-36.99964846, 174.75232883),
+	new L.LatLng(-37.005818949, 174.7632748),
+];
+var PuketutuIslandSouth = [
+	new L.LatLng(-36.967758545, 174.75668358),
+	new L.LatLng(-36.969301861, 174.7572845),
+	new L.LatLng(-36.97036501, 174.75423684),
+	new L.LatLng(-36.969267566, 174.75286322),
+	new L.LatLng(-36.96964481, 174.75157546),
+	new L.LatLng(-36.9704336, 174.75140376),
+	new L.LatLng(-36.97297139, 174.74745462),
+	new L.LatLng(-36.97297139, 174.746166865),
+	new L.LatLng(-36.974137382, 174.7455659),
+];
+var KiwiEsplanade = [
+	new L.LatLng(-36.93943626, 174.76464310),
+	new L.LatLng(-36.94149477, 174.76794836),
+	new L.LatLng(-36.940191, 174.769493673),
+	new L.LatLng(-36.94073999, 174.77151117),
+	new L.LatLng(-36.9403969, 174.771884778),
+	new L.LatLng(-36.940487676, 174.7750310),
+	new L.LatLng(-36.939745, 174.777907),
+	new L.LatLng(-36.93751493, 174.778336),
+	new L.LatLng(-36.93977935, 174.78159863),
+	new L.LatLng(-36.9396211, 174.7840454),
+	new L.LatLng(-36.94046552441, 174.78447463),
+	new L.LatLng(-36.9392304, 174.785504838),
+	new L.LatLng(-36.938955933, 174.78644919),
+	new L.LatLng(-36.936931661, 174.786449197),
+];
+var Onehunga = [
+	new L.LatLng(-36.931956528, 174.78228544),
+	new L.LatLng(-36.92903991972868, 174.78177033),
+	new L.LatLng(-36.925196689, 174.773185256),
+];
+var OnehungaBayReserve = [
+	new L.LatLng(-36.92382542441, 174.77356407),
+	new L.LatLng(-36.92296455, 174.77405567),
+	new L.LatLng(-36.9247798611, 174.777239395),
+	new L.LatLng(-36.92548, 174.7764674),
+	new L.LatLng(-36.92382542441, 174.77356407),
+];
+var Waikowhai = [
+	new L.LatLng(-36.931793548, 174.76044255),
+	new L.LatLng(-36.930949165, 174.75452711),
+	new L.LatLng(-36.933960754, 174.74357698),
+	new L.LatLng(-36.932609776, 174.740301877),
+	new L.LatLng(-36.935142841, 174.73755541),
+	new L.LatLng(-36.935114696, 174.7336117929),
+	new L.LatLng(-36.9384638436, 174.73228565),
+	new L.LatLng(-36.9395485427, 174.730935759),
+	new L.LatLng(-36.93908299575, 174.72928084),
+	new L.LatLng(-36.93748816, 174.72854092),
+];
+var ArmourBay = [
+	new L.LatLng(-36.970973498, 174.61613868),
+	new L.LatLng(-36.97525675, 174.6206751893),
+	new L.LatLng(-36.97793366, 174.61783987418),
+	new L.LatLng(-36.98019867445, 174.618458488),
+	new L.LatLng(-36.9841107998, 174.616190236),
+	new L.LatLng(-36.988763908, 174.61814918),
+];
+var Cornwallis = [
+	new L.LatLng(-36.996337, 174.605716),
+	new L.LatLng(-37.0025709, 174.6033008),
+	new L.LatLng(-37.01451335, 174.606580225),
+	new L.LatLng(-37.01964592767, 174.6121614798),
+	new L.LatLng(-37.021688389, 174.60513717),
+	new L.LatLng(-37.0173415, 174.6008080),
+	new L.LatLng(-37.014827596, 174.60120158),
+	new L.LatLng(-37.01336109, 174.598906),
+];
+var AwhituPeninsula = [
+	new L.LatLng(-37.04295580, 174.5638649),
+	new L.LatLng(-37.04672599, 174.5563217),
+	new L.LatLng(-37.04567823, 174.5524517),
+	new L.LatLng(-37.046411181, 174.54740104),
+];
+var MangereBridge = [
+	new L.LatLng(-36.9413257, 174.79434391),
+	new L.LatLng(-36.9425695911, 174.79770475),
+	new L.LatLng(-36.94748356, 174.79976629),
+	new L.LatLng(-36.94954483, 174.7972879),
+];
+
+var ClarksBeachLine = new L.Polyline(ClarksBeach, polylineOptions)
+.bindPopup('<strong> Clarks Beach </strong> <br> <img src="Rangitoto-2.png" align="middle"/>', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(ClarksBeachLine);
+
+var BottleTopBeachLine = new L.Polyline(BottleTopBeach, polylineOptions)
+.bindPopup('<strong> Bottle Top Beach </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(BottleTopBeachLine);
+
+var PescaraPointLine = new L.Polyline(PescaraPoint, polylineOptions)
+.bindPopup('<strong> Pescara Point </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(PescaraPointLine);
+
+var WeymouthLine = new L.Polyline(Weymouth, polylineOptions)
+.bindPopup('<strong> Weymouth </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(WeymouthLine);
+
+var PuhinuiReserveLine = new L.Polyline(PuhinuiReserve, polylineOptions)
+.bindPopup('<strong> Puhinui Reserve </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(PuhinuiReserveLine);
+
+var RentonRdLine = new L.Polyline(RentonRd, polylineOptions)
+.bindPopup('<strong> Renton Rd </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(RentonRdLine);
+
+var PuketutuIslandSouthLine = new L.Polyline(PuketutuIslandSouth, polylineOptions)
+.bindPopup('<strong> Puketutu Island South </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(PuketutuIslandSouthLine);
+
+var KiwiEsplanadeLine = new L.Polyline(KiwiEsplanade, polylineOptions)
+.bindPopup('<strong> Kiwi Esplanade </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(KiwiEsplanadeLine);
+
+var OnehungaLine = new L.Polyline(Onehunga, polylineOptions)
+.bindPopup('<strong> Onehunga </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(OnehungaLine);
+
+var OnehungaBayReserveLine = new L.Polyline(OnehungaBayReserve, polylineOptions)
+.bindPopup('<strong> Onehunga Bay Reserve </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(OnehungaBayReserveLine);
+
+var WaikowhaiLine = new L.Polyline(Waikowhai, polylineOptions)
+.bindPopup('<strong> Waikowhai </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(WaikowhaiLine);
+
+var ArmourBayLine = new L.Polyline(ArmourBay, polylineOptions)
+.bindPopup('<strong> Armour Bay </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(ArmourBayLine);
+
+var CornwallisLine = new L.Polyline(Cornwallis, polylineOptions)
+.bindPopup('<strong> Cornwallis </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(CornwallisLine);
+
+var AwhituPeninsulaLine = new L.Polyline(AwhituPeninsula, polylineOptions)
+.bindPopup('<strong> Awhitu Peninsula </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(AwhituPeninsulaLine);
+
+var MangereBridgeLine = new L.Polyline(MangereBridge, polylineOptions)
+.bindPopup('<strong> Mangere Bridge </strong> <br> <img src="AucklandAirport.png" />', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(MangereBridgeLine);
+
+	
+</script>
+
+</body>
+</html>
