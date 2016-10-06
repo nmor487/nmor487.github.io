@@ -10,10 +10,50 @@
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%;}
     </style>
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#hide").click(function(){
+        $("l").hide();
+    });
+    $("#show").click(function(){
+        $("l").show();
+    });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+    $("#hidebase").click(function(){
+        $("j").hide();
+    });
+    $("#showbase").click(function(){
+        $("j").show();
+    });
+});
+</script>
+	
 </head>
+
 <body>
+
+<div style="position: fixed; z-index: 100000; background: transparent; left: 10px; top: 80px">
+<button id="hide">Hide Sources</button>
+<button id="show">Show Sources</button>
+
+<l><p><img src="Top.png" width = "40%"></p></l>
+</div>
+
+<div style="position: fixed; z-index: 100000; background: transparent; left: 10px; bottom: 10px">
+<j><p><img src="bottom.png" width = "40%"></p></j>
+
+<button id="hidebase">Hide Drains</button>
+<button id="showbase">Show Drains</button>
+</div>
+
 <!-- Logo Bottom Left Corner -->
-<div style="position: fixed; z-index: 100000; background: transparent; left: 15px; bottom: 10px">
+<div style="position: fixed; z-index: 100000; background: transparent; right: -440px; bottom: 20px">
   <img src="overlay.png" width = "40%">
 <!-- Links to sustainable coastlines and TPM -->  
 <!-- <br> 
@@ -31,8 +71,8 @@ L.mapbox.accessToken = 'pk.eyJ1Ijoibm1vcjQ4NyIsImEiOiJjaXRzNjl4NDYwNHY4MnpvYmcze
 var map = L.mapbox.map('map',null,{
 	minZoom: 10,
 	maxZoom:15,
-	maxBounds: [[-37.2063,174.333],[-36.7062,175.0525]]
-}).setView([-37.03, 174.766664],12)
+	maxBounds: [[-37.2063,174.333],[-36.7062,175.2525]]
+}).setView([-37.03, 174.666664],12)
 
 var layers = {
 	  Outdoors: L.mapbox.tileLayer('mapbox.outdoors'),
@@ -82,39 +122,39 @@ var OnehungaDrain = L.icon({
 
 // ADDING TO MAP
 L.marker([-36.965192, 174.779016], {icon: Watercare}).addTo(map)
-.bindPopup('<strong> Sewage Treatment Plant </strong>', {
+.bindPopup('<strong> Sewage Treatment Plant </strong><br><img src="Sewage Treatment Plant.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 L.marker([-37.00797, 174.79106], {icon: AucklandAirport}).addTo(map)
-.bindPopup('<strong> Auckland Airport </strong>', {
+.bindPopup('<strong> Auckland Airport </strong><br><img src="Airport.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 L.marker([-37.0419139, 174.53532], {icon: International}).addTo(map)
-.bindPopup('<strong> International Waters </strong>', {
+.bindPopup('<strong> International Waters </strong><br><img src="International Waters.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 L.marker([-37.024010, 174.713072], {icon: FishingBoat}).addTo(map)
-.bindPopup('<strong> Fishing Boats </strong>', {
+.bindPopup('<strong> Fishing Boats </strong><br><img src="Fishing Boats.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 
 // drains
 L.marker([-36.941179, 174.786938189], {icon: MangereBridgeDrain}).addTo(map)
-.bindPopup('<strong> Mangere Bridge Drain </strong>', {
+.bindPopup('<strong> Mangere Bridge Drain </strong><br><img src="Mangere Bridge Drain.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 L.marker([-36.968498, 174.79734495], {icon: MangereTownCentreDrain}).addTo(map)
-.bindPopup('<strong> Mangere Town Centre Drain </strong>', {
+.bindPopup('<strong> Mangere Town Centre Drain </strong><br><img src="Mangere Township Drain.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 L.marker([-36.9205817, 174.787371], {icon: OnehungaDrain}).addTo(map)
-.bindPopup('<strong> Onehunga Drain </strong>', {
+.bindPopup('<strong> Onehunga Drain </strong><br><img src="Onehunga Drain.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
@@ -246,105 +286,105 @@ var MangereBridge = [
 ];
 
 var ClarksBeachLine = new L.Polyline(ClarksBeach, polylineOptions)
-.bindPopup('<strong> Clarks Beach </strong> <br> <img src="Rangitoto-2.png" align="middle"/>', {
+.bindPopup('<img src="Clarks Beach.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(ClarksBeachLine);
 
 var BottleTopBeachLine = new L.Polyline(BottleTopBeach, polylineOptions)
-.bindPopup('<strong> Bottle Top Beach </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Bottle Top Beach.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(BottleTopBeachLine);
 
 var PescaraPointLine = new L.Polyline(PescaraPoint, polylineOptions)
-.bindPopup('<strong> Pescara Point </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Pescara Point.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(PescaraPointLine);
 
 var WeymouthLine = new L.Polyline(Weymouth, polylineOptions)
-.bindPopup('<strong> Weymouth </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Weymouth.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(WeymouthLine);
 
 var PuhinuiReserveLine = new L.Polyline(PuhinuiReserve, polylineOptions)
-.bindPopup('<strong> Puhinui Reserve </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Puhinui Reserve.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(PuhinuiReserveLine);
 
 var RentonRdLine = new L.Polyline(RentonRd, polylineOptions)
-.bindPopup('<strong> Renton Rd </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Renton Rd.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(RentonRdLine);
 
 var PuketutuIslandSouthLine = new L.Polyline(PuketutuIslandSouth, polylineOptions)
-.bindPopup('<strong> Puketutu Island South </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Puketutu Island South.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(PuketutuIslandSouthLine);
 
 var KiwiEsplanadeLine = new L.Polyline(KiwiEsplanade, polylineOptions)
-.bindPopup('<strong> Kiwi Esplanade </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Kiwi Esplanade.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(KiwiEsplanadeLine);
 
 var OnehungaLine = new L.Polyline(Onehunga, polylineOptions)
-.bindPopup('<strong> Onehunga </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Onehunga.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(OnehungaLine);
 
 var OnehungaBayReserveLine = new L.Polyline(OnehungaBayReserve, polylineOptions)
-.bindPopup('<strong> Onehunga Bay Reserve </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Onehunga Park Reserve.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(OnehungaBayReserveLine);
 
 var WaikowhaiLine = new L.Polyline(Waikowhai, polylineOptions)
-.bindPopup('<strong> Waikowhai </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Waikowhai Park.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(WaikowhaiLine);
 
 var ArmourBayLine = new L.Polyline(ArmourBay, polylineOptions)
-.bindPopup('<strong> Armour Bay </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Armor Bay.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(ArmourBayLine);
 
 var CornwallisLine = new L.Polyline(Cornwallis, polylineOptions)
-.bindPopup('<strong> Cornwallis </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="CornWallis.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(CornwallisLine);
 
 var AwhituPeninsulaLine = new L.Polyline(AwhituPeninsula, polylineOptions)
-.bindPopup('<strong> Awhitu Peninsula </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Awhitu.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
 map.addLayer(AwhituPeninsulaLine);
 
 var MangereBridgeLine = new L.Polyline(MangereBridge, polylineOptions)
-.bindPopup('<strong> Mangere Bridge </strong> <br> <img src="AucklandAirport.png" />', {
+.bindPopup('<img src="Mangere Bridge.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
