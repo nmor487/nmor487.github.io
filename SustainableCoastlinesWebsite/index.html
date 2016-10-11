@@ -33,23 +33,41 @@ $(document).ready(function(){
     });
 });
 </script>
+
+<script>
+$(document).ready(function(){
+    $("#hideright").click(function(){
+        $("k").hide();
+    });
+    $("#showright").click(function(){
+        $("k").show();
+    });
+});
+</script>
 	
 </head>
 
 <body>
 
 <div style="position: fixed; z-index: 100000; background: transparent; left: 10px; top: 80px">
-<button id="hide">Hide Sources</button>
-<button id="show">Show Sources</button>
+<button id="hide">Hide Drains</button>
+<button id="show">Show Drains</button>
 
-<l><p><img src="Top.png" width = "100%"></p></l>
+<l><p><img src="bottom.png" width = "100%"></p></l>
 </div>
 
 <div style="position: fixed; z-index: 100000; background: transparent; left: 10px; bottom: 10px">
-<j><p><img src="bottom.png" width = "100%"></p></j>
+<j><p><img src="Top.png" width = "100%"></p></j>
 
-<button id="hidebase">Hide Drains</button>
-<button id="showbase">Show Drains</button>
+<button id="hidebase">Hide Sources</button>
+<button id="showbase">Show Sources</button>
+</div>
+
+<div style="position: fixed; z-index: 100000; background: transparent; right: 10px; top: 30px">
+<k><p><img src="right top.png" width = "100%"></p></k>
+
+<button id="hideright" style="position: fixed; right: 162px; top: 10px">Hide Beaches</button>
+<button id="showright" style="position: fixed; right: 45px; top: 10px">Show Beaches</button>
 </div>
 
 <!-- Logo Bottom Left Corner -->
@@ -61,6 +79,10 @@ $(document).ready(function(){
   <a href="http://www.tepunahamatatini.ac.nz/"><strong>Te Punaha Matatini</strong></a> -->
 </div>
 
+<div style="position: fixed; z-index: 100000; background: transparent; right: -140px; bottom: 20px">
+  <img src="key.png" width = "40%">
+</div>
+
 <div id='map'></div>
 
 <!-- Starting Javascript -->
@@ -69,9 +91,9 @@ $(document).ready(function(){
 // LOAD MAP
 L.mapbox.accessToken = 'pk.eyJ1Ijoibm1vcjQ4NyIsImEiOiJjaXRzNjl4NDYwNHY4MnpvYmczeW5pc3lpIn0.icSxTMa2esji9UJyi99i7g';
 var map = L.mapbox.map('map',null,{
-	minZoom: 10,
-	maxZoom:15,
-	maxBounds: [[-37.2063,174.333],[-36.7062,175.2525]]
+	minZoom: 9,
+	maxZoom:17,
+//	maxBounds: [[-37.2063,174.333],[-36.7062,175.2525]]
 }).setView([-37.03, 174.666664],12)
 
 var layers = {
@@ -80,18 +102,18 @@ var layers = {
       Satellite: L.mapbox.tileLayer('mapbox.satellite')
 };
 
-layers.Outdoors.addTo(map);
+layers.Satellite.addTo(map);
 L.control.layers(layers).addTo(map);
 
 // CREATE CUSTOM ICONS FOR SOURCES
 var Watercare = L.icon({
 	iconUrl: 'Watercare.png',
-	iconSize: [70, 70],
+	iconSize: [110, 110],
 });
 
 var AucklandAirport = L.icon({
 	iconUrl: 'AucklandAirport.png',
-	iconSize: [90, 90],
+	iconSize: [110, 110],
 });
 
 var International = L.icon({
@@ -107,22 +129,22 @@ var FishingBoat = L.icon({
 // drains
 var MangereBridgeDrain = L.icon({
 	iconUrl: 'streetdrain.png',
-	iconSize: [20, 30],
+	iconSize: [110, 110],
 });
 
 var MangereTownCentreDrain = L.icon({
 	iconUrl: 'streetdrain.png',
-	iconSize: [20, 30],
+	iconSize: [110, 110],
 });
 
 var OnehungaDrain = L.icon({
 	iconUrl: 'streetdrain.png',
-	iconSize: [20, 30],
+	iconSize: [110, 110],
 });
 
 // ADDING TO MAP
 L.marker([-36.965192, 174.779016], {icon: Watercare}).addTo(map)
-.bindPopup('<strong> Sewage Treatment Plant </strong><br><img src="Sewage Treatment Plant.png" align="middle"/>', {
+.bindPopup('<strong> Industry </strong><br><img src="Sewage Treatment Plant.png" align="middle"/>', {
   maxWidth: "auto",
   keepInView: "true"
 });
@@ -161,9 +183,15 @@ L.marker([-36.9205817, 174.787371], {icon: OnehungaDrain}).addTo(map)
 
 // ADDING BEACHES AS POLYLINES
 var polylineOptions = {
-    color: 'cyan',
+    color: 'red',
     weight: 15,
-    opacity: 0.5
+    opacity: 0.7
+};
+
+var polylineOptions2 = {
+    color: 'yellow',
+    weight: 15,
+    opacity: 0.7
 };
 
 var ClarksBeach = [
@@ -230,6 +258,14 @@ var KiwiEsplanade = [
 	new L.LatLng(-36.938955933, 174.78644919),
 	new L.LatLng(-36.936931661, 174.786449197),
 ];
+var KiwiEsplanade2 = [
+	new L.LatLng(-36.9396211, 174.7840454),
+	new L.LatLng(-36.94046552441, 174.78447463),
+	new L.LatLng(-36.9392304, 174.785504838),
+	new L.LatLng(-36.938955933, 174.78644919),
+	new L.LatLng(-36.936931661, 174.786449197),
+];
+
 var Onehunga = [
 	new L.LatLng(-36.931956528, 174.78228544),
 	new L.LatLng(-36.92903991972868, 174.78177033),
@@ -340,6 +376,14 @@ var KiwiEsplanadeLine = new L.Polyline(KiwiEsplanade, polylineOptions)
   keepInView: "true"
 });
 map.addLayer(KiwiEsplanadeLine);
+
+var KiwiEsplanade2Line = new L.Polyline(KiwiEsplanade2, polylineOptions2)
+  .bindPopup('<img src="Kiwi Esplanade 2.png" align="middle"/>', {
+//  .bindPopup('Beach clean up', {
+  maxWidth: "auto",
+  keepInView: "true"
+});
+map.addLayer(KiwiEsplanade2Line);
 
 var OnehungaLine = new L.Polyline(Onehunga, polylineOptions)
 .bindPopup('<img src="Onehunga.png" align="middle"/>', {
